@@ -1,0 +1,21 @@
+#!/bin/bash
+
+this=$(pwd | grep -o "[^/]*$")
+path=$(pwd | grep -o ".*/")
+
+cd ..
+
+PREV=""
+
+for i in *; do
+    if [[ "$this" == "$i" ]]; then
+        echo $path/$PREV
+        exit 0
+    fi
+
+    if [[ -d "$i" ]]; then
+        PREV=$i
+    fi
+done
+
+

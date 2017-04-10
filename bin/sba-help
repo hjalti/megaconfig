@@ -1,0 +1,22 @@
+#!/bin/bash
+
+CWD=$(pwd)
+
+while [[ "$CWD" != "/" ]]; do
+    if ls -- */bin/activate > /dev/null 2>&1; then
+        files=(*/bin)
+        for f in "${files[@]}"; do
+            cd $f
+            break
+        done;
+        break
+    fi
+    cd ..
+    CWD=$(pwd)
+done
+
+if [ -f activate ]; then
+    pwd
+else
+    exit 1
+fi

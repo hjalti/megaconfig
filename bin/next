@@ -1,0 +1,25 @@
+#!/bin/bash
+
+this=$(pwd | grep -o "[^/]*$")
+path=$(pwd | grep -o ".*/")
+
+cd ..
+
+NEXT=0
+
+for i in *; do
+    if [[ -d "$i" ]]; then
+        if [[ "$NEXT" == 1 ]]; then
+            cd "$i";
+            echo "$path$i"
+            exit 0;
+        fi
+
+
+        if [[ "$this" == "$i" ]]; then
+            NEXT=1
+        fi
+    fi
+done
+
+
