@@ -1,0 +1,74 @@
+# common traversals, colors and more
+
+alias cd..='cd ..'
+alias cdf='cd $(ls | head -n1)'
+alias ..='cd ..'
+alias fdl='fdisk -l'
+alias ll='ls -lh'
+alias la='ls -A'
+alias l='ls -CF'
+
+alias g='grep'
+alias f='find'
+
+# directory stacks
+alias o='popd'
+
+# Colors if they are supported
+if [ -x /bin/dircolors ]; then
+    eval "`dircolors -b`"
+    alias ls='ls --color=auto --group-directories-first'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+alias m='make'
+alias mc='make clean'
+alias ..m='cd .. ; make ; cd -'
+alias ..mc='cd .. ; make clean ; cd -'
+
+alias c='cd'
+alias conflicts="git ls-files --unmerged | cut -f2 | uniq"
+alias :q="exit"
+alias mv='mv -i'
+
+alias such=git
+alias very=git
+alias wow='git status'
+alias kisa='cat'
+
+alias pydb='python -m pdb'
+
+#alias df=cdf
+alias mount="mount | column -t"
+
+# ZSH aliases
+alias -g ...='../..'
+alias -g ....='../../..'
+alias -g .....='../../../..'
+alias jdpug='setxkbmap is dvorak'
+alias dhanyc='setxkbmap is'
+alias next='cd "$(/home/hjalti/bin/next)"'
+alias prev='cd "$(/home/hjalti/bin/prev)"'
+alias first='cd "$(ls -d */|head -1)"'
+alias lastd='cd "$(ls -d */|tail -1)"'
+alias py='ipython'
+alias py2='ipython2'
+alias t='task'
+alias gp='pwd|tr -d "\n"|xclip'
+alias sba='source "$(~/bin/sba-help)/activate"'
+
+alias quote='vim /mnt/quotes.txt'
+
+alias git-commmmit='git commit -m "$(curl "whatthecommit.com"|egrep "<p>"|sed "s/<p>//")"'
+alias tvim='cd /tmp;vim'
+
+alias p='prev;ls'
+alias n='next;ls'
+alias pdb='python -m pdb'
+alias note='vim -c ":NERDTree ~/notes"'
+

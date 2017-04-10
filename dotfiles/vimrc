@@ -1,0 +1,224 @@
+autocmd BufEnter *.yaml " Vim plugged
+"
+call plug#begin('~/.vim/plugged')
+
+Plug 'mileszs/ack.vim'
+Plug 'kien/ctrlp.vim'
+Plug 'sjl/gundo.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'vim-scripts/paredit.vim'
+Plug 'ervandew/supertab'
+Plug 'vim-syntastic/syntastic'
+Plug 'flazz/vim-colorschemes'
+
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+Plug 'venantius/vim-cljfmt', {'for': 'clojure' }
+Plug 'venantius/vim-eastwood', {'for': 'clojure'}
+Plug 'guns/vim-slamhound', {'for': 'clojure'}
+
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'tpope/vim-surround'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'Valloric/YouCompleteMe'
+
+"Old plugins
+"ultisnips
+"vim-snippets
+"vim-go
+"vim-javascript
+"vim-jsx
+
+call plug#end()
+
+filetype plugin indent on
+
+" A syntax for placeholders
+" Pressing Control-[space] jumps to the next match.
+noremap <c-Space> <Esc>/<++><CR><Esc>cf>
+inoremap <c-Space> <Esc>/<++><CR><Esc>cf>
+noremap <c-NUL> <Esc>/<++><CR><Esc>cf>
+inoremap <c-NUL> <Esc>/<++><CR><Esc>cf>
+
+noremap <c-S-Space> <Esc>/''<CR><Esc>cf'\|<CR>
+inoremap <c-S-Space> <Esc>/''<CR><Esc>cf'\|<CR>
+
+" YouCompleteMe C/C++ support
+let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+
+" Make shift-insert work like in Xterm
+map <S-Insert> <MiddleMouse>
+map! <S-Insert> <MiddleMouse>
+
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+if has("vms")
+  set nobackup		" do not keep a backup file, use versions instead
+else
+  set backup		" keep a backup file
+endif
+
+set history=100		" keep 100 lines of command line history
+set ruler		    " show the cursor position all the time
+set noshowcmd		" display incomplete commands
+set incsearch		" do incremental searching
+set number
+
+set ignorecase      " ignore case in regex search
+set smartcase       " ignore "ignorecase" if search contains upper case chars
+set autowrite
+set hidden
+set mouse=a
+set t_Co=256
+set autoindent
+set novisualbell
+set nofoldenable
+
+" Vim puts all the swap files in ~/.vimswaps
+"
+set backupdir=~/.vimtmp/vimswaps
+set undodir=~/.vimtmp/undo
+set viewdir=~/.vimtmp/view
+
+set softtabstop=4
+set shiftwidth=4
+set tabstop=4
+set expandtab
+
+set undofile
+set cursorline
+set nocursorcolumn
+
+" Don't use Ex mode, use Q for formatting
+map Q gq
+
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern.
+if &t_Co > 2 || has("gui_running")
+  syntax on
+  set hlsearch
+endif
+
+let g:zenburn_high_Contrast=1
+let g:zenburn_transparent=0
+let g:zenburn_alternate_Visual=1
+let g:zenburn_force_dark_Background=0
+colorscheme zenburn
+
+
+noremap Y y$
+
+" make j and k play well on wrapped lines
+nmap j gj
+nmap k gk
+
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set norelativenumber
+    set number
+  else
+    set relativenumber
+  endif
+endfunc
+
+nnoremap <C-g> :call NumberToggle()<CR>
+
+let mapleader = ","
+function! WinMove(key)
+  let t:curwin = winnr()
+  exec "wincmd ".a:key
+  if (t:curwin == winnr()) "we havent moved
+    if (match(a:key,'[jk]')) "were we going up/down
+      wincmd v
+    else
+      wincmd s
+    endif
+    exec "wincmd ".a:key
+  endif
+endfunction
+
+noremap <leader>h              :call WinMove('h')<cr>
+noremap <leader>k              :call WinMove('k')<cr>
+noremap <leader>l              :call WinMove('l')<cr>
+noremap <leader>j              :call WinMove('j')<cr>
+
+noremap <leader>wc :wincmd q<cr>
+noremap <leader>wr <C-W>r
+
+noremap <leader>H              :wincmd H<cr>
+noremap <leader>K              :wincmd K<cr>
+noremap <leader>L              :wincmd L<cr>
+noremap <leader>J              :wincmd J<cr>
+
+noremap <leader>n :next<cr>
+noremap <leader>N :Next<cr>
+
+map <C-J> a<CR><Esc>k$
+
+
+"
+" Make vim change the working directory to the current file being edited
+"
+autocmd BufEnter * lcd %:p:h
+
+
+""" CtrlP
+
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlPMixed'
+let g:ctrlp_working_path_mode = 'ra'
+
+"""
+
+"" Omni complete
+set omnifunc=syntaxcomplete#Complete
+
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
+"" Supertab
+let g:SuperTabDefaultCompletionType = "context"
+
+""" Syntastic
+
+" Python
+"
+" IF Python 3
+" let g:syntastic_python_pyflakes_exe = '/usr/bin/pyflakes'
+" let g:syntastic_python_checkers=['python', 'pyflakes']
+let g:syntastic_python_checkers=['python2', 'pyflakes']
+
+" C++
+let g:syntastic_cpp_compiler_options = '-Wall -Wpedantic'
+
+let g:syntastic_disabled_filetypes=['markdown']
+
+""" end Syntastic
+
+""" Ultisnips
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+let g:UltiSnipsEditSplit="vertical"
+
+"""
+
+function! SwitchSourceHeader()
+  "update!
+  if (expand ("%:e") == "cpp")
+    find %:t:r.h
+  else
+    find %:t:r.cpp
+  endif
+endfunction
+
+nmap ,s :call SwitchSourceHeader()<CR>
+
+set tabpagemax=100
+
+""" Config jsx syntax highlighter
+let g:jsx_ext_required = 0

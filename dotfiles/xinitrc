@@ -1,0 +1,4 @@
+~/bin/dock-setup
+xrandr --auto
+nitrogen --restore
+exec i3

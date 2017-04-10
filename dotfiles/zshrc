@@ -1,0 +1,110 @@
+source /etc/profile
+
+ZSH=$HOME/.oh-my-zsh
+ZSH_THEME="helgi"
+COMPLETION_WAITING_DOTS="true"
+
+plugins=(arch compleat archlinux zsh-syntax-highlighting extract lein autojump gitignore pip python)
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern) #cursor)
+
+# fix movements
+if [[ "$TERM" != emacs ]]; then
+    [[ -z "$terminfo[kdch1]" ]] || bindkey -M emacs "$terminfo[kdch1]" delete-char
+    [[ -z "$terminfo[khome]" ]] || bindkey -M emacs "$terminfo[khome]" beginning-of-line
+    [[ -z "$terminfo[kend]" ]] || bindkey -M emacs "$terminfo[kend]" end-of-line
+    [[ -z "$terminfo[kich1]" ]] || bindkey -M emacs "$terminfo[kich1]" overwrite-mode
+    [[ -z "$terminfo[kdch1]" ]] || bindkey -M vicmd "$terminfo[kdch1]" vi-delete-char
+    [[ -z "$terminfo[khome]" ]] || bindkey -M vicmd "$terminfo[khome]" vi-beginning-of-line
+    [[ -z "$terminfo[kend]" ]] || bindkey -M vicmd "$terminfo[kend]" vi-end-of-line
+    [[ -z "$terminfo[kich1]" ]] || bindkey -M vicmd "$terminfo[kich1]" overwrite-mode
+
+    [[ -z "$terminfo[cuu1]" ]] || bindkey -M viins "$terminfo[cuu1]" vi-up-line-or-history
+    [[ -z "$terminfo[cuf1]" ]] || bindkey -M viins "$terminfo[cuf1]" vi-forward-char
+    [[ -z "$terminfo[kcuu1]" ]] || bindkey -M viins "$terminfo[kcuu1]" vi-up-line-or-history
+    [[ -z "$terminfo[kcud1]" ]] || bindkey -M viins "$terminfo[kcud1]" vi-down-line-or-history
+    [[ -z "$terminfo[kcuf1]" ]] || bindkey -M viins "$terminfo[kcuf1]" vi-forward-char
+    [[ -z "$terminfo[kcub1]" ]] || bindkey -M viins "$terminfo[kcub1]" vi-backward-char
+
+    # ncurses fogyatekos
+    [[ "$terminfo[kcuu1]" == "^[O"* ]] && bindkey -M viins "${terminfo[kcuu1]/O/[}" vi-up-line-or-history
+    [[ "$terminfo[kcud1]" == "^[O"* ]] && bindkey -M viins "${terminfo[kcud1]/O/[}" vi-down-line-or-history
+    [[ "$terminfo[kcuf1]" == "^[O"* ]] && bindkey -M viins "${terminfo[kcuf1]/O/[}" vi-forward-char
+    [[ "$terminfo[kcub1]" == "^[O"* ]] && bindkey -M viins "${terminfo[kcub1]/O/[}" vi-backward-char
+    [[ "$terminfo[khome]" == "^[O"* ]] && bindkey -M viins "${terminfo[khome]/O/[}" beginning-of-line
+    [[ "$terminfo[kend]" == "^[O"* ]] && bindkey -M viins "${terminfo[kend]/O/[}" end-of-line
+    [[ "$terminfo[khome]" == "^[O"* ]] && bindkey -M emacs "${terminfo[khome]/O/[}" beginning-of-line
+    [[ "$terminfo[kend]" == "^[O"* ]] && bindkey -M emacs "${terminfo[kend]/O/[}" end-of-line
+fi
+
+# Get colors in man pages with less
+# Less Colors for Man Pages
+export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
+export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
+export LESS_TERMCAP_me=$'\E[0m'           # end mode
+export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
+#export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
+export LESS_TERMCAP_ue=$'\E[0m'           # end underline
+export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
+
+export EDITOR="vim"
+export VISUAL="vim"
+
+source $ZSH/oh-my-zsh.sh
+source $HOME/.aliases
+
+# input styles
+bindkey "^[[A" history-search-backward
+bindkey "^[[B" history-search-forward
+
+#zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
+#zstyle :compinstall filename '/home/helgi/.zshrc'
+
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
+zstyle ':completion:*:cd:*' ignore-parents parent pwd
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+zstyle -e ':completion:*:approximate:*' \
+        max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3))numeric)'
+
+# Terminal Options
+setopt AUTO_CD           # implicate cd for non-commands
+setopt CD_ABLE_VARS       # read vars in cd
+setopt CORRECT            # correct spelling
+setopt COMPLETE_IN_WORD       # complete commands anywhere in the word
+setopt NOTIFY              # Notify when jobs finish
+setopt C_BASES             # 0xFF
+setopt BASH_AUTO_LIST      # Autolist options on repeition of ambiguous args
+setopt CHASE_LINKS         # Follow links in cds
+setopt AUTO_PUSHD          # Push dirs into history
+setopt ALWAYS_TO_END       # Move to the end on complete completion
+setopt LIST_ROWS_FIRST     # Row orientation for menu
+setopt MULTIOS             # Allow Multiple pipes
+setopt MAGIC_EQUAL_SUBST   # Expand inside equals
+setopt EXTENDED_GLOB
+setopt AUTO_PUSHD
+
+source ~/bin/preferences
+
+# Just like Helgi ^_^
+export PATH=/home/hjalti/bin:$PATH
+export PATH=/home/hjalti/.gem/ruby/2.3.0/bin/:$PATH
+export GOPATH=$HOME/doc/dev/go
+
+bindkey -v
+bindkey '\e[3~' delete-char
+bindkey '^R' history-incremental-search-backward
+
+unsetopt correctall
+
+bindkey "^[[1~" beginning-of-line
+bindkey "^[[4~" end-of-line
+
+set -o emacs
+
+mkcd ()
+{
+    mkdir -p -- "$1" &&
+    cd -P -- "$1"
+}

@@ -1,0 +1,5 @@
+":map <C-Tab> <Insert><C-Tab><Ctrl><Insert>
+":map <C-S-Tab> <Insert><C-S-Tab><Ctrl><Insert>
+:map <C-Tab> i<C-Tab>
+:map <C-S-Tab> i<C-S-Tab>
+:set gui=nonavigation
