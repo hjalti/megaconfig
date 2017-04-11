@@ -1,8 +1,7 @@
 #!/bin/bash
-USER=hjalti
-HOME=/home/$USER
+#USER=hjalti
+#HOME=/home/$USER
 INSTALLER=sudo pacman --noconfirm -S
-DESTDIR=.setup
 
 ############################################
 # Install essential packages, X, zsh, etc. #
@@ -39,32 +38,60 @@ $INSTALLER rsync
 $INSTALLER tar p7zip unzip unrar zip
 $INSTALLER wget
 
+##########################
+# Install extra packages #
+##########################
+
+$INSTALLER ack
+$INSTALLER bsd-games
+$INSTALLER chromium
+$INSTALLER mpv
+$INSTALLER youtube-dl
 
 
 
-# Dotfiles
-ln -s dotfiles/zshrc $HOME/.zshrc
-ln -s dotfiles/vimrc $HOME/.vimrc
-ln -s dotfiles/aliases $HOME/.aliases
-ln -s dotfiles/xinitrc $HOME/.xinitrc
+# Link all dotfiles
+for f in dotfiles/*; do
+    ln $f $HOME/.$(basename $f)
+done
 
-# Make directories for persistent undo/swapfiles in vim
-mkdir $HOME/.vimtmp
-mkdir $HOME/.vimtmp/vimswaps
-mkdir $HOME/.vimtmp/undo
-mkdir $HOME/.vimtmp/view
+# Make home bin directory
+mkdir $HOME/bin
 
-# install plugged for vim
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# Link to all bin files
+for f in bin/*; do
+    ln $f $HOME/bin/$(basename $f)
+done
+
+# Setup i3
+mkdir $HOME/.i3
+ln -f i3/config $HOME/.i3/config
+
+
+###########
+#   zsh   #
+###########
 
 
 # Change default shell
 
-chsh -s zsh $USER
+chsh -s /bin/zsh
+
+# Install oh-my-zsh
+
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+# Copy my favourite theme to themes
+
+cp zsh/helgi.zsh-theme $HOME/.oh-my-zsh/themes
+
+
+##################
+#     aurget     #
+##################
 
 
 # Install aurget
-
 cd /tmp
 curl -L -O https://github.com/pbrisbin/aurget/archive/v4.7.2.tar.gz
 cd aurget
@@ -74,18 +101,30 @@ rm -rfv aurget
 
 # Aurget packages
 
+cd /tmp
+
 aurget -S urxvt-font-size-git
 aurget -S spotify
 
-# Install extra packages
 
-$INSTALLER ack
-$INSTALLER bsd-games
-$INSTALLER chromium
-$INSTALLER mpv
-$INSTALLER youtube-dl
 
+###############
+#     VIM     #
+###############
+
+
+# Make directories for persistent undo/swapfiles in vim
+mkdir $HOME/.vimtmp
+mkdir $HOME/.vimtmp/vimswaps
+mkdir $HOME/.vimtmp/undo
+mkdir $HOME/.vimtmp/view
+
+
+# install plugged for vim
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # Install vim plugins
 
 vim -c ":PlugInstall"
+
+
