@@ -1,0 +1,3 @@
+~/bin/preferences
+xrandr --auto
+exec i3

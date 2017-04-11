@@ -1,13 +1,12 @@
 #!/bin/bash
-#USER=hjalti
-#HOME=/home/$USER
-INSTALLER=sudo pacman --noconfirm -S
+INSTALLER="sudo pacman --noconfirm -S"
 
 ############################################
 # Install essential packages, X, zsh, etc. #
 ############################################
 
-$INSTALLER xorg-server
+$INSTALLER xorg-server xorg-xinit xorg-xrandr xorg-server-utils
+$INSTALLER ttf-freefont ttf-ubuntu-font-family
 $INSTALLER i3-wm i3lock i3status
 $INSTALLER make cmake
 $INSTALLER man-pages
@@ -37,6 +36,7 @@ $INSTALLER zathura zathura-djvu zathura-pdf-poppler zathura-ps
 $INSTALLER rsync
 $INSTALLER tar p7zip unzip unrar zip
 $INSTALLER wget
+$INSTALLER fakeroot
 
 ##########################
 # Install extra packages #
@@ -47,7 +47,6 @@ $INSTALLER bsd-games
 $INSTALLER chromium
 $INSTALLER mpv
 $INSTALLER youtube-dl
-
 
 
 # Link all dotfiles
@@ -73,17 +72,24 @@ ln -f i3/config $HOME/.i3/config
 ###########
 
 
-# Change default shell
-
-chsh -s /bin/zsh
-
 # Install oh-my-zsh
+echo "####################################"
+echo "About to install oh-my-zsh. The"
+echo "installation process will open a new"
+echo "shell. To complete installation,"
+echo "exit the shell (crtl+D) after it"
+echo "has been changed"
+echo "####################################"
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-# Copy my favourite theme to themes
+# Link my favourite theme to themes
 
-cp zsh/helgi.zsh-theme $HOME/.oh-my-zsh/themes
+ln zsh/helgi.zsh-theme $HOME/.oh-my-zsh/themes
+
+# oh-my-zsh installation overwrites .zshrc
+
+ln -f dotfiles/zshrc $HOME/.zshrc
 
 
 ##################
@@ -93,7 +99,8 @@ cp zsh/helgi.zsh-theme $HOME/.oh-my-zsh/themes
 
 # Install aurget
 cd /tmp
-curl -L -O https://github.com/pbrisbin/aurget/archive/v4.7.2.tar.gz
+curl -L -O https://aur.archlinux.org/cgit/aur.git/snapshot/aurget.tar.gz
+tar -xvf aurget.tar.gz
 cd aurget
 makepkg -si
 cd ..
@@ -105,8 +112,6 @@ cd /tmp
 
 aurget -S urxvt-font-size-git
 aurget -S spotify
-
-
 
 ###############
 #     VIM     #
@@ -127,4 +132,4 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.c
 
 vim -c ":PlugInstall"
 
-
+python $HOME/.vim/plugged/YouCompleteMe/install.py
