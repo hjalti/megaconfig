@@ -1,0 +1,86 @@
+XTerm*Utf8: 1
+XTerm*font: -*-fixed-medium-r-*-*-12-*-*-*-*-*-*-*
+XTerm*background: black
+XTerm*foreground: white
+
+UXTerm*Utf8: 1
+UXTerm*font: -*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*
+UXTerm*background: black
+UXTerm*foreground: white
+
+XTerm*termName: xterm-256color
+UXTerm*termName: xterm-256color
+urxvt*termName: xterm-256color
+urxvt*urgentOnBell: 1
+urxvt*scrollBar: 0
+urxvt*secondaryScroll: 0
+urxvt*Utf8: 1
+! urxvt*font: -*-fixed-medium-r-*-*-18-*-*-*-*-*-*-*
+URxvt*font: xft:DejaVu Sans Mono:pixelsize=12:antialias=true:hinting=true
+urxvt.perl-ext:        default,url-select,font-size
+! urxvt.perl-ext:        default,url-picker
+urxvt.urlLauncher:     /usr/bin/firefox
+URxvt.url-select.launcher:  /usr/bin/firefox
+urxvt.matcher.button:  1
+urxvt.depth: 32
+! urxvt*background: black
+! urxvt*foreground: white
+URxvt.keysym.M-u:    perl:url-select:select_next
+! URxvt.keysym.M-a:    perl:url-picker
+URxvt.underlineURLs: true
+URxvt.url-select.underline: true
+
+gnuplot*font: -bitstream-*-*-*-*-*-13-*-*-*-*-*-*-*
+
+urxvt*foreground: #FFC252
+! urxvt*background: #101010
+urxvt*background: #000000
+
+! Normal
+! color0    black
+! color1    red
+! color2    green
+! color3    yellow
+! color4    blue
+! color5    purple
+! color6    cyan
+! color7    white
+
+urxvt*color0:    #333333
+urxvt*color1:    #cd3333
+urxvt*color2:    #b6e77d
+urxvt*color3:    #aecb33
+urxvt*color4:    #6666cd
+urxvt*color5:    #ea96eb
+urxvt*color6:    #28c09c
+urxvt*color7:    #f2f2f2
+
+! Light
+! color8    black
+! color9    red
+! color10    green
+! color11    yellow
+! color12    blue
+! color13    purple
+! color14    cyan
+! color15    white
+
+urxvt*color8:    #747474
+urxvt*color9:    #f99286
+urxvt*color10:    #65ff5c
+urxvt*color11:    #fcfbcc
+urxvt*color12:    #6666ff
+urxvt*color13:    #ff65f
+urxvt*color14:    #d7d9fc
+urxvt*color15:    #e2e2e2
+
+urxvt*internalborder: 6
+URxvt.transparent: true
+URxvt.shading: 10
+
+URxvt*keysym.Home: \033[1~
+URxvt*keysym.End: \033[4~
+
+! Change font size
+URxvt.keysym.C-S-Up:   perl:font-size:increase
+URxvt.keysym.C-S-Down: perl:font-size:decrease
