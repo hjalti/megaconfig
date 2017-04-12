@@ -7,14 +7,14 @@ INSTALLER="sudo pacman --noconfirm -S"
 
 $INSTALLER xorg-server xorg-xinit xorg-xrandr xorg-server-utils
 $INSTALLER ttf-freefont ttf-ubuntu-font-family
-$INSTALLER i3-wm i3lock i3status
+$INSTALLER i3-wm i3lock i3status dmenu
 $INSTALLER make cmake
 $INSTALLER man-pages
 $INSTALLER openssh
 $INSTALLER pulseaudio
 $INSTALLER python
 $INSTALLER python2
-$INSTALLER zsh
+$INSTALLER zsh zsh-syntax-highlighting
 
 ################################
 # Install very useful packages #
