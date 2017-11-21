@@ -16,7 +16,7 @@ urxvt*scrollBar: 0
 urxvt*secondaryScroll: 0
 urxvt*Utf8: 1
 ! urxvt*font: -*-fixed-medium-r-*-*-18-*-*-*-*-*-*-*
-URxvt*font: xft:DejaVu Sans Mono:pixelsize=12:antialias=true:hinting=true
+URxvt*font: xft:DejaVu Sans Mono:pixelsize=16:antialias=true:hinting=true
 urxvt.perl-ext:        default,url-select,font-size
 ! urxvt.perl-ext:        default,url-picker
 urxvt.urlLauncher:     /usr/bin/firefox

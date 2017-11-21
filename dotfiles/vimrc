@@ -8,7 +8,7 @@ Plug 'sjl/gundo.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'vim-scripts/paredit.vim'
-Plug 'ervandew/supertab'
+"Plug 'ervandew/supertab'
 Plug 'vim-syntastic/syntastic'
 Plug 'flazz/vim-colorschemes'
 
@@ -20,8 +20,22 @@ Plug 'guns/vim-slamhound', {'for': 'clojure'}
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-obsession'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'Valloric/YouCompleteMe'
+
+Plug 'jmcantrell/vim-virtualenv'
+Plug 'vim-scripts/taglist.vim'
+Plug 'vim-scripts/buftabline'
+"Plug 'bling/vim-bufferline'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'chriskempson/base16-vim'
+"Plug 'davidhalter/jedi-vim'
+Plug 'fisadev/vim-isort'
+Plug 'posva/vim-vue'
+
+Plug 'andviro/flake8-vim'
 
 "Old plugins
 "ultisnips
@@ -36,13 +50,16 @@ filetype plugin indent on
 
 " A syntax for placeholders
 " Pressing Control-[space] jumps to the next match.
-noremap <c-Space> <Esc>/<++><CR><Esc>cf>
-inoremap <c-Space> <Esc>/<++><CR><Esc>cf>
-noremap <c-NUL> <Esc>/<++><CR><Esc>cf>
-inoremap <c-NUL> <Esc>/<++><CR><Esc>cf>
+" noremap <c-Space> <Esc>/<++><CR><Esc>cf>
+" inoremap <c-Space> <Esc>/<++><CR><Esc>cf>
+" noremap <c-NUL> <Esc>/<++><CR><Esc>cf>
+" inoremap <c-NUL> <Esc>/<++><CR><Esc>cf>
 
-noremap <c-S-Space> <Esc>/''<CR><Esc>cf'\|<CR>
-inoremap <c-S-Space> <Esc>/''<CR><Esc>cf'\|<CR>
+" noremap <c-S-Space> <Esc>/''<CR><Esc>cf'\|<CR>
+" inoremap <c-S-Space> <Esc>/''<CR><Esc>cf'\|<CR>
+
+" Clear search when enter is pressed in normal mode
+nnoremap <backspace> :noh<CR><backspace>
 
 " YouCompleteMe C/C++ support
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
@@ -50,6 +67,9 @@ let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 " Make shift-insert work like in Xterm
 map <S-Insert> <MiddleMouse>
 map! <S-Insert> <MiddleMouse>
+
+nmap <c-q> :bprevious<CR>
+nmap <c-s> :bnext<CR>
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
@@ -90,6 +110,19 @@ set expandtab
 set undofile
 set cursorline
 set nocursorcolumn
+set textwidth=70
+
+" Show full path of file in statusline
+set statusline+=%F
+
+" ctags settings
+set tagcase=match
+set tags=./tags;/
+nnoremap ð <C-]>
+nnoremap gð g]
+vnoremap ð <C-]>
+vnoremap gð g]
+
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -105,7 +138,7 @@ let g:zenburn_high_Contrast=1
 let g:zenburn_transparent=0
 let g:zenburn_alternate_Visual=1
 let g:zenburn_force_dark_Background=0
-colorscheme zenburn
+colorscheme lucid
 
 
 noremap Y y$
@@ -158,6 +191,7 @@ noremap <leader>N :Next<cr>
 map <C-J> a<CR><Esc>k$
 
 
+
 "
 " Make vim change the working directory to the current file being edited
 "
@@ -188,7 +222,7 @@ let g:SuperTabDefaultCompletionType = "context"
 " IF Python 3
 " let g:syntastic_python_pyflakes_exe = '/usr/bin/pyflakes'
 " let g:syntastic_python_checkers=['python', 'pyflakes']
-let g:syntastic_python_checkers=['python2', 'pyflakes']
+let g:syntastic_python_checkers=['python3', 'pyflakes']
 
 " C++
 let g:syntastic_cpp_compiler_options = '-Wall -Wpedantic'
@@ -222,3 +256,22 @@ set tabpagemax=100
 
 """ Config jsx syntax highlighter
 let g:jsx_ext_required = 0
+
+
+""" Configure buftabline
+
+" Only show if there are two or more buffers
+let g:buftabline_show=1
+" Show buffer numbers
+let g:buftabline_numbers=1
+
+
+""" Configure kerd commenter
+let NERDDefaultAlign='left'
+
+autocmd FileType html setlocal shiftwidth=2 softtabstop=2
+autocmd FileType htmldjango setlocal shiftwidth=2 softtabstop=2
+autocmd FileType javascript setlocal shiftwidth=2 softtabstop=2 
+autocmd FileType vue setlocal shiftwidth=2 softtabstop=2 
+autocmd FileType liquid setlocal shiftwidth=2 softtabstop=2 
+autocmd FileType scss setlocal shiftwidth=2 softtabstop=2 

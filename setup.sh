@@ -15,6 +15,8 @@ $INSTALLER pulseaudio
 $INSTALLER python
 $INSTALLER python2
 $INSTALLER zsh zsh-syntax-highlighting
+$INSTALLER pkgfile
+$INSTALLER mlocate
 
 ################################
 # Install very useful packages #
@@ -47,6 +49,7 @@ $INSTALLER bsd-games
 $INSTALLER chromium
 $INSTALLER mpv
 $INSTALLER youtube-dl
+$INSTALLER xclip
 
 
 # Link all dotfiles

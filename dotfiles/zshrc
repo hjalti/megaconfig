@@ -4,7 +4,7 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="helgi"
 COMPLETION_WAITING_DOTS="true"
 
-plugins=(arch compleat archlinux zsh-syntax-highlighting extract lein autojump gitignore pip python shrink-path)
+plugins=(arch compleat archlinux zsh-syntax-highlighting extract lein gitignore pip python shrink-path fasd)
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern) #cursor)
 
 # fix movements
@@ -108,3 +108,8 @@ mkcd ()
     mkdir -p -- "$1" &&
     cd -P -- "$1"
 }
+
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/bin/virtualenvwrapper.sh
+
+stty -ixon
