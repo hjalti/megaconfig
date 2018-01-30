@@ -113,3 +113,5 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 source /usr/bin/virtualenvwrapper.sh
 
 stty -ixon
+
+eval "$(fasd --init auto)"

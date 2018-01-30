@@ -7,7 +7,7 @@ INSTALLER="sudo pacman --noconfirm -S"
 
 $INSTALLER xorg-server xorg-xinit xorg-xrandr xorg-server-utils
 $INSTALLER ttf-freefont ttf-ubuntu-font-family
-$INSTALLER i3-wm i3lock i3status dmenu
+$INSTALLER i3-wm i3lock i3status dmenu perl-anyevent-i3
 $INSTALLER make cmake
 $INSTALLER man-pages
 $INSTALLER openssh
@@ -28,7 +28,7 @@ $INSTALLER rxvt-unicode
 $INSTALLER rxvt-unicode-terminfo
 $INSTALLER dunst
 $INSTALLER feh
-$INSTALLER autojump
+$INSTALLER fasd
 $INSTALLER gcc
 $INSTALLER htop
 $INSTALLER iputils
@@ -50,12 +50,17 @@ $INSTALLER chromium
 $INSTALLER mpv
 $INSTALLER youtube-dl
 $INSTALLER xclip
+$INSTALLER ctags
+$INSTALLER python-virtualenvwrapper
+$INSTALLER python-pip
 
 
 # Link all dotfiles
 for f in dotfiles/*; do
     ln $f $HOME/.$(basename $f)
 done
+
+ln config/dunst/dunstrc $HOME/.config/dunst/dunstrc
 
 # Make home bin directory
 mkdir $HOME/bin
