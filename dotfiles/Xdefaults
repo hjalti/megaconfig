@@ -34,6 +34,7 @@ gnuplot*font: -bitstream-*-*-*-*-*-13-*-*-*-*-*-*-*
 
 urxvt*foreground: #FFC252
 ! urxvt*background: #101010
+! urxvt*background: rgba:0000/0000/0200/c800
 urxvt*background: #000000
 
 ! Normal
@@ -77,6 +78,12 @@ urxvt*color15:    #e2e2e2
 urxvt*internalborder: 6
 URxvt.transparent: true
 URxvt.shading: 10
+
+! Prevent jumping down on new output when scrolling up
+urxvt*saveLines:            10000
+URxvt*scrollTtyOutput:      false
+URxvt*scrollWithBuffer:     true
+URxvt*scrollTtyKeypress:    true
 
 URxvt*keysym.Home: \033[1~
 URxvt*keysym.End: \033[4~

@@ -3,7 +3,7 @@ autocmd BufEnter *.yaml " Vim plugged
 call plug#begin('~/.vim/plugged')
 
 Plug 'mileszs/ack.vim'
-Plug 'kien/ctrlp.vim'
+" Plug 'kien/ctrlp.vim'
 Plug 'sjl/gundo.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
@@ -31,11 +31,15 @@ Plug 'vim-scripts/buftabline'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'chriskempson/base16-vim'
-"Plug 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim'
 Plug 'fisadev/vim-isort'
 Plug 'posva/vim-vue'
 
 Plug 'andviro/flake8-vim'
+Plug 'elixir-editors/vim-elixir'
+
+Plug 'junegunn/fzf', { 'do': './install --all' } " fuzzyfinder
+Plug 'janko-m/vim-test'
 
 "Old plugins
 "ultisnips
@@ -146,6 +150,8 @@ noremap Y y$
 " make j and k play well on wrapped lines
 nmap j gj
 nmap k gk
+vmap j gj
+vmap k gk
 
 function! NumberToggle()
   if(&relativenumber == 1)
@@ -187,6 +193,8 @@ noremap <leader>J              :wincmd J<cr>
 
 noremap <leader>n :next<cr>
 noremap <leader>N :Next<cr>
+noremap <leader>f :NERDTreeFind<cr>
+noremap <leader>t :NERDTree<cr>
 
 map <C-J> a<CR><Esc>k$
 
@@ -195,14 +203,14 @@ map <C-J> a<CR><Esc>k$
 "
 " Make vim change the working directory to the current file being edited
 "
-autocmd BufEnter * lcd %:p:h
+" autocmd BufEnter * lcd %:p:h
 
 
 """ CtrlP
 
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlPMixed'
-let g:ctrlp_working_path_mode = 'ra'
+" let g:ctrlp_map = '<c-p>'
+" let g:ctrlp_cmd = 'CtrlPMixed'
+" let g:ctrlp_working_path_mode = 'ra'
 
 """
 
@@ -250,7 +258,7 @@ function! SwitchSourceHeader()
   endif
 endfunction
 
-nmap ,s :call SwitchSourceHeader()<CR>
+nmap <leader>s :call SwitchSourceHeader()<CR>
 
 set tabpagemax=100
 
@@ -269,9 +277,20 @@ let g:buftabline_numbers=1
 """ Configure kerd commenter
 let NERDDefaultAlign='left'
 
+
+" fzf
+let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
+map <C-p> :FZF<cr>
+
+" ack.vim
+function! CallAck()
+    exec 'Ack! ' . expand("<cword>") . ' '
+endfunction
+nnoremap <leader>a :call CallAck()<CR>
+
+
 autocmd FileType html setlocal shiftwidth=2 softtabstop=2
 autocmd FileType htmldjango setlocal shiftwidth=2 softtabstop=2
-autocmd FileType javascript setlocal shiftwidth=2 softtabstop=2 
-autocmd FileType vue setlocal shiftwidth=2 softtabstop=2 
-autocmd FileType liquid setlocal shiftwidth=2 softtabstop=2 
-autocmd FileType scss setlocal shiftwidth=2 softtabstop=2 
+autocmd FileType vue setlocal shiftwidth=2 softtabstop=2
+autocmd FileType liquid setlocal shiftwidth=2 softtabstop=2
+autocmd FileType scss setlocal shiftwidth=2 softtabstop=2

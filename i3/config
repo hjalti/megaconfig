@@ -141,6 +141,7 @@ bar {
 }
 
 exec --no-startup-id dunst #-config
+exec feh --bg-center /home/hjalti/.i3/desktop_background.png
 exec /home/hjalti/bin/i3init
 
 bindsym $mod+Control+L exec /home/hjalti/bin/my-lock
@@ -158,3 +159,4 @@ bindsym $mod+dead_abovering scratchpad show
 bindsym XF86AudioMute exec pactl set-sink-mute alsa_output.pci-0000_00_1f.3.analog-stereo toggle
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5%
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5%
+bindsym XF86AudioMicMute exec pactl set-source-mute alsa_input.pci-0000_00_1f.3.analog-stereo toggle
