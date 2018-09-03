@@ -1,11 +1,16 @@
 #!/bin/bash
 INSTALLER="sudo pacman --noconfirm -S"
 
+if ! [ -x "$(command -v sudo)" ]; then
+    echo "Sudo must be installed"
+    exit 1
+fi
+
 ############################################
 # Install essential packages, X, zsh, etc. #
 ############################################
 
-$INSTALLER xorg-server xorg-xinit xorg-xrandr xorg-server-utils
+$INSTALLER xorg-server xorg-xinit xorg-xrandr xorg-apps
 $INSTALLER ttf-freefont ttf-ubuntu-font-family
 $INSTALLER i3-wm i3lock i3status dmenu perl-anyevent-i3
 $INSTALLER make cmake
@@ -53,6 +58,7 @@ $INSTALLER xclip
 $INSTALLER ctags
 $INSTALLER python-virtualenvwrapper
 $INSTALLER python-pip
+$INSTALLER net-tools
 
 
 # Link all dotfiles
@@ -140,4 +146,5 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.c
 
 vim -c ":PlugInstall"
 
+git -C $HOME/.vim/plugged/YouCompleteMe/ submodule update --init --recursive
 python $HOME/.vim/plugged/YouCompleteMe/install.py
